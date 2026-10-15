@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDF Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="init()">
+<header class="top">
+  <div class="logo"><span class="dot"></span>PDF Studio</div>
+  <span class="pill" id="cnt">0 عملية</span>
+</header>
+
+<section class="hero">
+  <h1>كل أدوات PDF في مكان واحد</h1>
+  <p>حوّل، ادمج، دوّر، واستخرج الصفحات مباشرة من متصفحك. ملفاتك لا تغادر جهازك.</p>
+</section>
+
+<main class="grid">
+  <article class="card" id="c1">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div><h3>صور إلى PDF</h3><p>ادمج عدة صور في ملف واحد</p>
+    <label class="drop"><input type="file" id="f1" multiple accept="image/*" onchange="sh(this,'n1')"><span id="n1">اضغط لاختيار الصور</span></label>
+    <button class="btn" id="b1" onclick="go(1)">تحويل</button>
+  </article>
+
+  <article class="card" id="c2">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div><h3>PDF إلى صور</h3><p>كل صفحة تصبح صورة PNG</p>
+    <label class="drop"><input type="file" id="f2" accept="application/pdf" onchange="sh(this,'n2')"><span id="n2">اضغط لاختيار PDF</span></label>
+    <select id="q2"><option value="1">جودة عادية</option><option value="2" selected>جودة عالية</option><option value="3">جودة قصوى</option></select>
+    <button class="btn" id="b2" onclick="go(2)">تحويل</button>
+  </article>
+
+  <article class="card" id="c3">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div><h3>حذف صفحات</h3><p>مثال: 1,3,5-7</p>
+    <label class="drop"><input type="file" id="f3" accept="application/pdf" onchange="sh(this,'n3')"><span id="n3">اضغط لاختيار PDF</span></label>
+    <input type="text" id="t3" placeholder="أرقام الصفحات">
+    <button class="btn" id="b3" onclick="go(3)">حذف</button>
+  </article>
+
+  <article class="card" id="c4">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg></div><h3>إضافة صفحة</h3><p>فارغة أو من ملف آخر</p>
+    <label class="drop"><input type="file" id="f4" accept="application/pdf" onchange="sh(this,'n4')"><span id="n4">الملف الأساسي</span></label>
+    <label class="drop"><input type="file" id="f5" accept="application/pdf" onchange="sh(this,'n5')"><span id="n5">ملف للإضافة منه (اختياري)</span></label>
+    <input type="text" id="t4" placeholder="بعد الصفحة رقم (0 = البداية)">
+    <button class="btn" id="b4" onclick="go(4)">إضافة</button>
+  </article>
+
+  <article class="card" id="c5">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div><h3>دمج ملفات PDF</h3><p>بالترتيب الذي تختاره</p>
+    <label class="drop"><input type="file" id="f6" multiple accept="application/pdf" onchange="sh(this,'n6')"><span id="n6">اختر ملفين أو أكثر</span></label>
+    <button class="btn" id="b5" onclick="go(5)">دمج</button>
+  </article>
+
+  <article class="card" id="c6">
+    <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.9 1 6.7 2.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3>تدوير وفصل</h3><p>دوّر صفحات أو استخرجها</p>
+    <label class="drop"><input type="file" id="f7" accept="application/pdf" onchange="sh(this,'n7')"><span id="n7">اضغط لاختيار PDF</span></label>
+    <select id="s7"><option value="90">تدوير 90°</option><option value="180">تدوير 180°</option><option value="270">تدوير 270°</option><option value="x">استخراج فقط</option></select>
+    <input type="text" id="t7" placeholder="الصفحات (فارغ = الكل)">
+    <button class="btn" id="b6" onclick="go(6)">تنفيذ</button>
+  </article>
+</main>
+
+<section class="log">
+  <h4>سجل العمليات</h4>
+  <ul id="hist"><li class="empty">لا توجد عمليات بعد</li></ul>
+</section>
+
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
